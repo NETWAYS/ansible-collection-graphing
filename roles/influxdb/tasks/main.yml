@@ -14,5 +14,5 @@
 
 - name: Start InfluxDB 2
   service:
-    name: influxdb2
+    name: influxdb
     state: started
