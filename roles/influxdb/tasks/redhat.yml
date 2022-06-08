@@ -7,7 +7,7 @@
 - name: Ensure InfluxDB yum repository is configured (RedHat)
   yum_repository:
     name: influxdb
-    description: InfluxDB Repository - RHEL \$releasever
+    description: InfluxDB Repository - RHEL $releasever
     file: influxdb
     baseurl: https://repos.influxdata.com/rhel/$releasever/$basearch/stable
     gpgcheck: yes
