@@ -8,7 +8,7 @@
   yum_repository:
     name: influxdb
     description: InfluxDB Repository - RHEL \$releasever
-    file: influxdb.repo
-    baseurl: https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable
+    file: influxdb
+    baseurl: https://repos.influxdata.com/rhel/$releasever/$basearch/stable
     gpgcheck: yes
     gpgkey: https://repos.influxdata.com/influxdb.key
