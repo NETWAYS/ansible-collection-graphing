@@ -1,0 +1,13 @@
+---
+
+- name: Manage rpm repositories
+  import_tasks: redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Manage deb repositories
+  import_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Install InfluxDB 2
+  package:
+    name: influxdb2

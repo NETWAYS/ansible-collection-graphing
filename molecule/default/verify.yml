@@ -1,0 +1,8 @@
+---
+
+- hosts: all
+  tasks:
+    - name: Wait for InfluxDB port
+      wait_for:
+        host: localhost
+        port: 8086

@@ -1,0 +1,15 @@
+---
+- name: Ensure InfluxDB key is available (Debian)
+  apt_key:
+    url: https://repos.influxdata.com/influxdb.key
+    state: present
+
+- name: Ensure InfluxDB apt repository is configured (Debian)
+  apt_repository:
+    repo: deb [signed-by=/etc/apt/trusted.gpg.d/influxdb.gpg] https://repos.influxdata.com/{{ ansible_os_family }} {{ ansible_distribution_release }} stable
+    state: present
+  when: elastic_variant == "elastic"
+
+- name: Refresh apt cache
+  apt:
+    update_cache: yes

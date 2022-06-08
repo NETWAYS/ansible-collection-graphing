@@ -1,0 +1,11 @@
+---
+
+- name: Converge
+  hosts: all
+  collections:
+    - netways.graphing
+  tasks:
+
+    - name: "Include InfluxDB"
+      include_role:
+        name: influxdb
