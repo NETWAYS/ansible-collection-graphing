@@ -9,7 +9,7 @@
     repo: >
       deb
       [signed-by=/etc/apt/trusted.gpg.d/influxdb.gpg]
-      https://repos.influxdata.com/{{ ansible_distribution }}
+      https://repos.influxdata.com/{{ ansible_distribution | lowercase }}
       {{ ansible_distribution_release }}
       stable
     state: present
