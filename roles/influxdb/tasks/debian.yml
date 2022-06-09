@@ -8,7 +8,6 @@
   apt_repository:
     repo: >
       deb
-      [signed-by=/etc/apt/trusted.gpg.d/influxdb.gpg]
       https://repos.influxdata.com/{{ ansible_distribution | lower }}
       {{ ansible_distribution_release }}
       stable
