@@ -1,0 +1,14 @@
+---
+- name: Ensure Grafana repository key is available (RedHat)
+  rpm_key:
+    key: https://packages.grafana.com/gpg.key
+    state: present
+
+- name: Ensure Grafana yum repository is configured (RedHat)
+  yum_repository:
+    name: grafana-oss
+    description: Grafana OSS Repository - RHEL $releasever
+    file: grafana
+    baseurl: https://packages.grafana.com/oss/rpm
+    gpgcheck: yes
+    gpgkey: https://packages.grafana.com/gpg.key

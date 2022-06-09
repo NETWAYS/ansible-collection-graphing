@@ -9,3 +9,7 @@
     - name: "Include InfluxDB"
       include_role:
         name: influxdb
+
+    - name: "Include Grafana"
+      include_role:
+        name: grafana
