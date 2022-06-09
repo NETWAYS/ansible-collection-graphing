@@ -12,6 +12,23 @@
   package:
     name: grafana
 
+- name: Place Grafana ini file
+  template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+    backup: true
+    owner: root
+    group: grafana
+    mode: 0640
+  notify:
+    - Restart Grafana
+
+- name: Open firewall port for Grafana
+  firewalld:
+    service: grafana
+    permanent: yes
+    state: enabled
+
 - name: Start Grafana
   service:
     name: grafana-server
