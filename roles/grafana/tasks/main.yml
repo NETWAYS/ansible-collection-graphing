@@ -23,12 +23,6 @@
   notify:
     - Restart Grafana
 
-- name: Open firewall port for Grafana
-  firewalld:
-    service: grafana
-    permanent: yes
-    state: enabled
-
 - name: Start Grafana
   service:
     name: grafana-server

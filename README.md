@@ -15,4 +15,13 @@ Install basic Grafana
 
 ## Prerequisites ##
 
+### Packages ###
 Some of the used repositories need the packages `apt-transport-https`, `software-properties-common` and `wget` on Debian systems available.
+
+### Firewall ###
+
+You need to open Firewall ports yourself.
+
+Defaults:
+
+* Grafana: `3000`
