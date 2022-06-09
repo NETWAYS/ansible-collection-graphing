@@ -1,0 +1,14 @@
+---
+- name: Ensure InfluxDB repository key is available (RedHat)
+  rpm_key:
+    key: https://repos.influxdata.com/influxdb.key
+    state: present
+
+- name: Ensure InfluxDB yum repository is configured (RedHat)
+  yum_repository:
+    name: influxdb
+    description: InfluxDB Repository - RHEL $releasever
+    file: influxdb
+    baseurl: https://repos.influxdata.com/rhel/$releasever/$basearch/stable
+    gpgcheck: yes
+    gpgkey: https://repos.influxdata.com/influxdb.key

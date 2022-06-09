@@ -1,0 +1,52 @@
+---
+name: Molecule Test
+on:
+  push:
+    tags:
+      - '*'
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  molecule_tests:
+    runs-on: ubuntu-latest
+
+    env:
+      COLLECTION_NAMESPACE: netways
+      COLLECTION_NAME: graphing
+
+    strategy:
+      max-parallel: 4
+      matrix:
+        distro: [centos7, rockylinux8, debian11, ubuntu2004]
+        scenario: [default]
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements-test.txt
+
+      - name: Install collection
+        run: |
+          mkdir -p ~/.ansible/collections/ansible_collections/$COLLECTION_NAMESPACE
+          cp -a ../ansible-collection-$COLLECTION_NAME ~/.ansible/collections/ansible_collections/$COLLECTION_NAMESPACE/$COLLECTION_NAME
+
+      - name: Test with molecule
+        run: |
+          ansible --version
+          molecule --version
+          molecule --debug test -s ${{ matrix.scenario }}
+        env:
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
