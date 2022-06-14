@@ -1,0 +1,9 @@
+---
+- name: Install Influx DB 2 CLI
+  package: 
+    name: influxdb2-cli
+
+- name: Influx DB 2 initial setup
+  command: influx setup --org {{ influxdb_org }} --bucket {{ influxdb_bucket }} --username {{ influxdb_user }} --password {{ influxdb_password }} --token {{ influxdb_token }} --host http://{{ influxdb_host }}:8086 --force 
+
+

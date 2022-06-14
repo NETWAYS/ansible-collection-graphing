@@ -16,3 +16,6 @@
   service:
     name: influxdb
     state: started
+
+- include_tasks: bucket.yml
+
