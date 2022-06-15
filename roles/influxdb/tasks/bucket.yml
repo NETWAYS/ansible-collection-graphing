@@ -3,7 +3,44 @@
   package: 
     name: influxdb2-cli
 
-- name: Influx DB 2 initial setup
-  command: influx setup --org {{ influxdb_org }} --bucket {{ influxdb_bucket }} --username {{ influxdb_user }} --password {{ influxdb_password }} --token {{ influxdb_token }} --host http://{{ influxdb_host }}:8086 --force 
+- name: Check bucket
+  command: influx bucket list -n "{{ influxdb_bucket }}"
+  register: result
+  ignore_errors: yes
 
+- name: Influx DB 2 initial setup
+  command: influx setup \
+    --org "{{ influxdb_org }}" \
+    --bucket "{{ influxdb_bucket }}" \
+    --username "{{ influxdb_user }}" \
+    --password "{{ influxdb_password }}" \ 
+    --token "{{ influxdb_token }}" \
+    --host http://{{ influxdb_host }}:8086 \
+    --force 
+  when: result.rc != 0
+
+- name: Create authentication config
+  command: influx config create \
+    --config-name "{{ authentication_config_name }}" \
+    --host-url http://{{ influxdb_host }}:8086 \
+    --org "{{ influxdb_org }}" \
+    --token "{{ influxdb_token }}" \
+    --active
+  args:
+    creates: /root/.influxdbv2/configs
+
+- name: Register bucket id
+  shell: influx bucket list | grep -P "\s{{ influxdb_bucket }}\s" | grep -Po "^\S*"
+  ignore_errors: yes
+  register: bucket_id
+
+- name: Register token
+  shell: influx auth list | grep "{{ bucket_id.stdout}}"
+  ignore_errors: yes
+  register: token_list
+
+- name: Create token für bucket
+  shell: influx auth create --write-bucket "{{ bucket_id.stdout }}" |grep -v ^ID | awk '{print $2}'
+  register: bucket_token
+  when: token_list.rc != 0
 
