@@ -63,7 +63,7 @@
     | grep "{{ bucket_id.stdout}}"
     | awk '{print $2}'
   register: token_list
-
+  changed_when: false
 - name: Save token
   set_fact:
     token: "{{ token_list.stdout }}"
