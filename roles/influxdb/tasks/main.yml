@@ -1,5 +1,4 @@
 ---
-
 - name: Manage rpm repositories
   import_tasks: redhat.yml
   when: ansible_os_family == 'RedHat'
@@ -16,3 +15,5 @@
   service:
     name: influxdb
     state: started
+
+- include_tasks: bucket.yml
