@@ -58,7 +58,7 @@
   when: token_list.rc != 0
 
 - name: Read tokens
-  shell: > 
+  shell: >
     influx auth list
     | grep "{{ bucket_id.stdout}}"
     | awk '{print $2}'
