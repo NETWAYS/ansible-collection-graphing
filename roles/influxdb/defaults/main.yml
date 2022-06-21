@@ -3,8 +3,8 @@
 influxdb_setup: true
 influxdb_org: icinga
 influxdb_user: admin
-influxdb_bucket: icinga
 influxdb_password: icinga123
-influxdb_token: 123321
+influxdb_bucket: icinga
 influxdb_host: localhost
 authentication_config_name: admin
+retention: 365d

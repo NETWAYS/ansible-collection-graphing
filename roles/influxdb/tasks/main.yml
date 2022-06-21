@@ -1,5 +1,4 @@
 ---
-
 - name: Manage rpm repositories
   import_tasks: redhat.yml
   when: ansible_os_family == 'RedHat'
@@ -18,4 +17,3 @@
     state: started
 
 - include_tasks: bucket.yml
-
