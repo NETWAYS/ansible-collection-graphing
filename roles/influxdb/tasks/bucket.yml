@@ -7,6 +7,7 @@
   command: influx bucket list -n "{{ influxdb_bucket }}"
   register: result
   ignore_errors: yes
+  changed_when: false
 
 - name: Influx DB 2 initial setup
   command: >
@@ -37,6 +38,7 @@
     | grep -Po "^\S*"
   ignore_errors: yes
   register: bucket_id
+  changed_when: false
 
 - name: list bucket id
   shell: >
@@ -44,6 +46,7 @@
     | grep "{{ bucket_id.stdout}}"
   ignore_errors: yes
   register: token_list
+  changed_when: false
 
 - name: Create token für bucket
   shell: >
@@ -53,6 +56,14 @@
     | awk '{print $2}'
   register: bucket_token
   when: token_list.rc != 0
+
+- name: Read tokens
+  shell: > 
+    influx auth list
+    | grep "{{ bucket_id.stdout}}"
+    | awk '{print $2}'
+  register: token_list
+
 - name: Save token
   set_fact:
-    token: "{{ bucket_token.stdout }}"
+    token: "{{ token_list.stdout }}"
