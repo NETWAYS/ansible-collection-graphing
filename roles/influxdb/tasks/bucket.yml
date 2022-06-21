@@ -57,4 +57,3 @@
 - name: Save token
   set_fact:
     token: "{{ bucket_token.stdout }}"
-
