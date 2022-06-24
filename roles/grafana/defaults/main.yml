@@ -1,9 +1,9 @@
 ---
 #Grafan admin variable
-user: admin
-password: strongpass
+grafana_user: admin
+grafana_password: strongpass
 
 #Datasource InfluxDB variable
-url: http://localhost:8086
-organization: icinga
-bucket_name: icinga
+grafna_influxdb_url: http://localhost:8086
+grafna_influxdb_organization: icinga
+grafana_influxdb_bucket_name: icinga
