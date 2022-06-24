@@ -1,0 +1,9 @@
+---
+#Grafan admin variable
+user: admin
+password: strongpass
+
+#Datasource InfluxDB variable
+url: http://localhost:8086
+organization: icinga
+bucket_name: icinga
