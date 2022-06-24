@@ -1,5 +1,4 @@
 ---
-
 - name: Manage rpm repositories
   import_tasks: redhat.yml
   when: ansible_os_family == 'RedHat'
@@ -22,6 +21,16 @@
     mode: 0640
   notify:
     - Restart Grafana
+
+- name: Place datasource file
+  template:
+    src: datasources.yml.j2
+    dest: /etc/grafana/provisioning/datasources/datasources.yml
+    owner: root
+    group: grafana
+    mode: 0640
+  notify:
+   - Restart Grafana
 
 - name: Start Grafana
   service:

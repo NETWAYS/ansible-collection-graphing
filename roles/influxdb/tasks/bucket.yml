@@ -51,6 +51,7 @@
 - name: Create token für bucket
   shell: >
     influx auth create
+    --read-bucket "{{ bucket_id.stdout }}"
     --write-bucket "{{ bucket_id.stdout }}"
     |grep -v ^ID
     | awk '{print $2}'
