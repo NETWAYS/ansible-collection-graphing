@@ -65,6 +65,13 @@
     | awk '{print $2}'
   register: token_list
   changed_when: false
-- name: Save token
+
+- name: Save token for icinga
   set_fact:
-    token: "{{ token_list.stdout }}"
+    influxdb_icinga_token: "{{ token_list.stdout }}"
+  when: influxdb_icinga_token is defined
+- name: Save token for graphing
+
+  set_fact:
+    influxdb_graphing_token: "{{ token_list.stdout }}"
+  when: influxdb_graphing_token is defined

@@ -1,10 +1,10 @@
 ---
 # Bucket konfiguration variable
 influxdb_setup: true
-influxdb_org: icinga
+influxdb_org: admin
 influxdb_user: admin
-influxdb_password: icinga123
-influxdb_bucket: icinga
+influxdb_password: strongpass
+influxdb_bucket: mybucket
 influxdb_host: localhost
-authentication_config_name: admin
+authentication_config_name: administration
 retention: 365d

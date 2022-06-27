@@ -6,9 +6,9 @@ datasources:
     access: proxy
     url: {{ grafna_influxdb_url }}
     secureJsonData:
-      token: "{{ grafana_influxdb_token }}"
+      token: "{{ influxdb_graphing_token }}"
     jsonData:
       version: Flux
-      organization: {{ grafana_influxdb_organization }}
+      organization: {{ grafna_influxdb_organization }}
       defaultBucket: {{ grafana_influxdb_bucket_name }}
       tlsSkipVerify: true
