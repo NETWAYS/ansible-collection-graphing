@@ -15,7 +15,7 @@ datasources:
       tlsSkipVerify: true
 {% endif %}
 {% if influxdb_influxql_query %} 
-  - name: InfluxDb_v1
+  - name: InfluxDB_v1
     type: influxdb
     access: proxy
     url: {{ grafana_influxdb_url }} 

@@ -1,6 +1,8 @@
 ---
 # Bucket konfiguration variable
-influxdb_setup: true
+influxdb_influxql_query: true
+influxdb_icinga_save_token: true
+influxdb_graphing_save_token: true
 influxdb_org: admin
 influxdb_user: admin
 influxdb_password: strongpass
@@ -8,3 +10,5 @@ influxdb_bucket: mybucket
 influxdb_host: localhost
 authentication_config_name: administration
 retention: 365d
+
+

@@ -58,6 +58,15 @@
   register: bucket_token
   when: token_list.rc != 0
 
+- name: Bucket mapping
+  shell: >
+    influx v1 dbrp create
+    --db "{{ influxdb_bucket }}"
+    --rp "{{ influxdb_bucket }}"
+    --bucket-id "{{ bucket_id.stdout}}"
+  when: influxdb_influxql_query   
+  when: result.rc != 0
+
 - name: Read tokens
   shell: >
     influx auth list
@@ -69,9 +78,9 @@
 - name: Save token for icinga
   set_fact:
     influxdb_icinga_token: "{{ token_list.stdout }}"
-  when: influxdb_icinga_token is defined
-- name: Save token for graphing
+  when: influxdb_icinga_save_token
 
+- name: Save token for graphing
   set_fact:
     influxdb_graphing_token: "{{ token_list.stdout }}"
-  when: influxdb_graphing_token is defined
+  when: influxdb_graphing_save_token
