@@ -64,8 +64,7 @@
     --db "{{ influxdb_bucket }}"
     --rp "{{ influxdb_bucket }}"
     --bucket-id "{{ bucket_id.stdout}}"
-  when: influxdb_influxql_query   
-  when: result.rc != 0
+  when: (influxdb_influxql_query) and (result.rc != 0)
 
 - name: Read tokens
   shell: >

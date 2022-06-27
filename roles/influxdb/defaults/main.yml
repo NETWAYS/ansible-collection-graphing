@@ -10,5 +10,3 @@ influxdb_bucket: mybucket
 influxdb_host: localhost
 authentication_config_name: administration
 retention: 365d
-
-
