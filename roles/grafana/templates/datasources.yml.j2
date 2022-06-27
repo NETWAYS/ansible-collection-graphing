@@ -1,14 +1,28 @@
 apiVersion: 1
-
 datasources:
+
+{% if influxdb_flux_query %}
   - name: InfluxDB_v2_Flux
     type: influxdb
     access: proxy
-    url: {{ grafna_influxdb_url }}
+    url: {{ grafana_influxdb_url }}
     secureJsonData:
-      token: "{{ influxdb_graphing_token }}"
+      token: {{ influxdb_graphing_token }}
     jsonData:
       version: Flux
-      organization: {{ grafna_influxdb_organization }}
+      organization: {{ grafana_influxdb_organization }}
       defaultBucket: {{ grafana_influxdb_bucket_name }}
       tlsSkipVerify: true
+{% endif %}
+{% if influxdb_influxql_query %} 
+  - name: InfluxDb_v1
+    type: influxdb
+    access: proxy
+    url: {{ grafana_influxdb_url }} 
+    database: {{ grafana_influxdb_bucket_name }}
+    jsonData:
+      httpMode: GET
+      httpHeaderName1: 'Authorization'
+    secureJsonData:
+      httpHeaderValue1: 'Token {{ influxdb_graphing_token }}'
+{% endif %}
