@@ -4,13 +4,13 @@ grafana_user: admin
 grafana_password: strongpass
 
 #Datasource InfluxDB variable
-influxdb_flux_query: true
-influxdb_influxql_query: true
+infuxdb_grafana_stack: true
+influxdb_host: influxdb
 grafana_influxdb_url: http://localhost:8086
 grafana_influxdb_organization: admin
 grafana_influxdb_bucket_name: mybucket
 
-#test 
+#Datasource Konfiguration
 grafana_datasources: >
 
   - name: InfluxDB_v2_Flux
@@ -24,8 +24,7 @@ grafana_datasources: >
       organization: {{ grafana_influxdb_organization }}
       defaultBucket: {{ grafana_influxdb_bucket_name }}
       tlsSkipVerify: true
-
-  - name: InfluxDB_v1_influxql 
+  - name: InfluxDB_v1_influxql
     type: influxdb
     access: proxy
     url: {{ grafana_influxdb_url }}
