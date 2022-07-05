@@ -9,3 +9,29 @@ influxdb_influxql_query: true
 grafana_influxdb_url: http://localhost:8086
 grafana_influxdb_organization: admin
 grafana_influxdb_bucket_name: mybucket
+
+#test 
+grafana_datasources: >
+
+  - name: InfluxDB_v2_Flux
+    type: influxdb
+    access: proxy
+    url: {{ grafana_influxdb_url }}
+    secureJsonData:
+      token: {{ influxdb_graphing_token }}
+    jsonData:
+      version: Flux
+      organization: {{ grafana_influxdb_organization }}
+      defaultBucket: {{ grafana_influxdb_bucket_name }}
+      tlsSkipVerify: true
+
+  - name: InfluxDB_v1_influxql 
+    type: influxdb
+    access: proxy
+    url: {{ grafana_influxdb_url }}
+    database: {{ grafana_influxdb_bucket_name }}
+    jsonData:
+      httpMode: GET
+      httpHeaderName1: 'Authorization'
+    secureJsonData:
+      httpHeaderValue1: 'Token {{ influxdb_graphing_token }}'
