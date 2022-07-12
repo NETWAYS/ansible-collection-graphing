@@ -13,3 +13,5 @@
     - name: "Include Grafana"
       include_role:
         name: grafana
+  vars:
+    influxdb_host: graphing-default
