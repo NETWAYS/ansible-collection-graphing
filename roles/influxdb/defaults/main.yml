@@ -1,8 +1,6 @@
 ---
 # Bucket konfiguration variable
 influxdb_influxql_query: true
-influxdb_icinga_save_token: true
-influxdb_graphing_save_token: true
 influxdb_org: admin
 influxdb_user: admin
 influxdb_password: strongpass
