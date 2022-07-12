@@ -22,7 +22,6 @@
   notify:
     - Restart Grafana
 
-      #- name: InfluxDB-Grafana Stack
 - block:
     - name: Register bucket id
       shell: >
@@ -34,27 +33,18 @@
       delegate_to: "{{ influxdb_host }}"
       changed_when: false
 
-    - name: Read tokens
-      shell: >
-        influx auth list
-        | grep "{{ bucket_id.stdout}}"
-        | awk '{print $2}'
-      register: token_list
-      delegate_to: "{{ influxdb_host }}"
-      changed_when: false
-
     - name: Fetch token
       shell: >
         cat "/root/influxdb_token_{{ bucket_id.stdout }}"
       register: influxdb_token_value
       delegate_to: "{{ influxdb_host }}"
       changed_when: false
-  
+
     - name: set_fact token
       set_fact:
         influxdb_graphing_token: "{{ influxdb_token_value.stdout }}"
-  when: infuxdb_grafana_stack
- 
+  when: influxdb_grafana_stack
+
 - name: Place datasource file
   template:
     src: datasources.yml.j2
@@ -64,7 +54,7 @@
     mode: 0640
   notify:
     - Restart Grafana
-  
+
 - name: Start Grafana
   service:
     name: grafana-server
