@@ -1,0 +1,10 @@
+[Unit]
+Description=timer to backup influxdb
+Requires=systemd-influxdb-backup.service
+
+[Timer]
+Unit=systemd-influxdb-backup-service
+OnCalendar=*-*-* *:*:00
+
+[Install]
+WantedBy=timers.target

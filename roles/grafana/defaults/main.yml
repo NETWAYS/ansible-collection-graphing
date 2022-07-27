@@ -5,7 +5,7 @@ grafana_password: strongpass
 
 #Datasource InfluxDB variable
 influxdb_grafana_stack: true
-influxdb_host: influxdb
+influxdb_host: localhost
 grafana_influxdb_url: http://localhost:8086
 grafana_influxdb_organization: admin
 grafana_influxdb_bucket_name: mybucket

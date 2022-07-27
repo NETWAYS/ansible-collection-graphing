@@ -8,3 +8,10 @@ influxdb_bucket: mybucket
 influxdb_host: localhost
 authentication_config_name: administration
 retention: 365d
+influxdb_token_path: /root/
+influxdb_backup_path: /tmp/
+influxdb_backup_month: "*"
+influxdb_backup_week: "*"
+influxdb_backup_hour: "*"
+influxdb_backup_minute: 0
+

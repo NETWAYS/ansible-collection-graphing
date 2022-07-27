@@ -77,7 +77,7 @@
 - name: Save token in file
   copy:
     content: "{{ token_list.stdout }}"
-    dest: "/root/influxdb_token_{{ bucket_id.stdout }}"
+    dest: "{{ influxdb_token_path }}/influxdb_token_{{ bucket_id.stdout }}"
     owner: root
     group: root
     mode: '0600'

@@ -1,0 +1,10 @@
+[Unit]
+Description=service to run backup command
+Wants=systemd-influxdb-backup.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemd-influxdb-backup-command.sh
+
+[Install]
+WantedBy=multi-user.target

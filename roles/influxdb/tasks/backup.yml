@@ -1,0 +1,25 @@
+---
+- name : Read root token
+  shell: >
+    influx auth list
+    | grep "admin's Token"
+    | awk '{print$4}'
+  register: root_token
+
+- name: set_fact root token
+  set_fact:
+    influxdb_root_token: "{{ root_token.stdout }}"  
+    
+- name: Configure systemd
+  template:
+    src: "{{ item.src }}"
+    dest:  "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: a+x  
+  loop:
+    - { src: "systemd-influxdb-backup-service.j2" , dest: "/etc/systemd/system/systemd-influxdb-backup.service" }
+    - { src: "systemd-influxdb-backup-timer.j2" , dest: "/etc/systemd/system/systemd-influxdb-backup.timer" }
+    - { src: "systemd-influxdb-backup-command.j2" , dest: "/usr/bin/systemd-influxdb-backup-command.sh" }
+  notify:
+    - Restart systemd-influxdb-backup.service
