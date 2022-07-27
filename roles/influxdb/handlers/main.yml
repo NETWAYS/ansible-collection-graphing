@@ -1,5 +1,5 @@
 ---
-- name: Restart systemd-influxdb-backup.service 
+- name: Restart systemd-influxdb-backup.service
   service:
     name: systemd-influxdb-backup.service
     daemon_reload: yes
