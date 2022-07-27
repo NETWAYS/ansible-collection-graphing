@@ -17,6 +17,6 @@
     state: started
 
 - name: Import tasks to setup InfluxDB
-    import_tasks:
-      - bucket.yml
-      - backup.yml
+  import_tasks:
+    - bucket.yml
+    - backup.yml
