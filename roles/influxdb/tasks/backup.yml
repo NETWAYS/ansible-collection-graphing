@@ -5,6 +5,7 @@
     | grep "admin's Token"
     | awk '{print$4}'
   register: root_token
+  changed_when: false
 
 - name: set_fact root token
   set_fact:
