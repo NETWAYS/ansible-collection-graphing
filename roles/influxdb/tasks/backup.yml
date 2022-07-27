@@ -8,7 +8,7 @@
 
 - name: set_fact root token
   set_fact:
-    influxdb_root_token: "{{ root_token.stdout }}"  
+    influxdb_root_token: "{{ root_token.stdout }}"
     
 - name: Configure systemd
   template:
