@@ -4,7 +4,7 @@ Requires=systemd-influxdb-backup.service
 
 [Timer]
 Unit=systemd-influxdb-backup-service
-OnCalendar=*-*-* *:*:00
+OnCalendar=daily
 
 [Install]
 WantedBy=timers.target
