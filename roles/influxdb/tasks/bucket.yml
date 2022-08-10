@@ -73,6 +73,7 @@
     | awk '{print $2}'
   register: token_list
   changed_when: false
+  when: influxdb_grafana_stack
 
 - name: Save token in file
   copy:
@@ -81,3 +82,4 @@
     owner: root
     group: root
     mode: '0600'
+  when: influxdb_grafana_stack
