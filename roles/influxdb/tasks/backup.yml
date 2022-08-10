@@ -1,5 +1,5 @@
 ---
-- name : Read root token
+- name: Read root token
   shell: >
     influx auth list
     | grep "admin's Token"
@@ -14,7 +14,7 @@
 - name: Configure systemd
   template:
     src: "{{ item.src }}"
-    dest:  "{{ item.dest }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: a+x
