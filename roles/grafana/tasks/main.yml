@@ -1,0 +1,30 @@
+---
+
+- name: Manage rpm repositories
+  import_tasks: redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Manage deb repositories
+  import_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Install Grafana
+  package:
+    name: grafana
+
+- name: Place Grafana ini file
+  template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+    backup: true
+    owner: root
+    group: grafana
+    mode: 0640
+  notify:
+    - Restart Grafana
+
+- name: Start Grafana
+  service:
+    name: grafana-server
+    state: started
+    enabled: yes
