@@ -51,19 +51,35 @@
 - name: Create token für bucket
   shell: >
     influx auth create
+    --read-bucket "{{ bucket_id.stdout }}"
     --write-bucket "{{ bucket_id.stdout }}"
     |grep -v ^ID
     | awk '{print $2}'
   register: bucket_token
   when: token_list.rc != 0
 
-- name: Read tokens
+- name: Bucket mapping
+  shell: >
+    influx v1 dbrp create
+    --db "{{ influxdb_bucket }}"
+    --rp "{{ influxdb_bucket }}"
+    --bucket-id "{{ bucket_id.stdout}}"
+  when: (influxdb_influxql_query) and (result.rc != 0)
+
+- name: Register token
   shell: >
     influx auth list
     | grep "{{ bucket_id.stdout}}"
     | awk '{print $2}'
   register: token_list
   changed_when: false
-- name: Save token
-  set_fact:
-    token: "{{ token_list.stdout }}"
+  when: influxdb_grafana_stack
+
+- name: Save token in file
+  copy:
+    content: "{{ token_list.stdout }}"
+    dest: "{{ influxdb_token_path }}/influxdb_token_{{ bucket_id.stdout }}"
+    owner: root
+    group: root
+    mode: '0600'
+  when: influxdb_grafana_stack

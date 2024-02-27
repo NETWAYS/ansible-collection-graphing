@@ -16,4 +16,8 @@
     name: influxdb
     state: started
 
-- include_tasks: bucket.yml
+- name: Setup bucket
+  import_tasks: bucket.yml
+
+- name: Setup backup
+  import_tasks: backup.yml

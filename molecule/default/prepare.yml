@@ -19,6 +19,9 @@
           - gpg-agent
           - procps
           - curl
+          - apt-transport-https
+          - software-properties-common
+          - wget
       when: ansible_os_family == "Debian"
 
     - name: Install packages for RedHat

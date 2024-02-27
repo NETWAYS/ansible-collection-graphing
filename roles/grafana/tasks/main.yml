@@ -1,0 +1,62 @@
+---
+- name: Manage rpm repositories
+  import_tasks: redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Manage deb repositories
+  import_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Install Grafana
+  package:
+    name: grafana
+
+- name: Place Grafana ini file
+  template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+    backup: true
+    owner: root
+    group: grafana
+    mode: 0640
+  notify:
+    - Restart Grafana
+
+- block:
+    - name: Register bucket id
+      shell: >
+        influx bucket list
+        | grep -P "\s{{ grafana_influxdb_bucket_name }}\s"
+        | grep -Po "^\S*"
+      ignore_errors: yes
+      register: bucket_id
+      delegate_to: "{{ influxdb_host }}"
+      changed_when: false
+
+    - name: Fetch token
+      shell: >
+        cat "/root/influxdb_token_{{ bucket_id.stdout }}"
+      register: influxdb_token_value
+      delegate_to: "{{ influxdb_host }}"
+      changed_when: false
+
+    - name: set_fact token
+      set_fact:
+        influxdb_graphing_token: "{{ influxdb_token_value.stdout }}"
+  when: influxdb_grafana_stack
+
+- name: Place datasource file
+  template:
+    src: datasources.yml.j2
+    dest: /etc/grafana/provisioning/datasources/datasources.yml
+    owner: root
+    group: grafana
+    mode: 0640
+  notify:
+    - Restart Grafana
+
+- name: Start Grafana
+  service:
+    name: grafana-server
+    state: started
+    enabled: yes

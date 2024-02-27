@@ -1,0 +1,2 @@
+#!/bin/bash
+influx backup "{{ influxdb_backup_path }}"/backup_$(date '+%Y-%m-%d_%H-%M') -t "{{ influxdb_root_token }}"
