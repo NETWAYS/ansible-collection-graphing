@@ -1,7 +1,12 @@
 ---
+- name: Ensure gpg exists, for signing keys
+  ansible.builtin.package:
+    name: gnupg
+    state: present
+
 - name: Ensure InfluxDB repository key is available (RedHat)
   rpm_key:
-    key: https://repos.influxdata.com/influxdb.key
+    key: https://repos.influxdata.com/influxdata-archive.key
     state: present
 
 - name: Ensure InfluxDB yum repository is configured (RedHat)
@@ -11,4 +16,4 @@
     file: influxdb
     baseurl: https://repos.influxdata.com/rhel/$releasever/$basearch/stable
     gpgcheck: yes
-    gpgkey: https://repos.influxdata.com/influxdb.key
+    gpgkey: https://repos.influxdata.com/influxdata-archive.key
