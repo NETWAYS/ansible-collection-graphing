@@ -9,7 +9,7 @@
   ignore_errors: yes
   changed_when: false
 
-- name: Influx DB 2 initial setup
+- name: Influx DB 2 initial setup # noqa risky-shell-pipe no-changed-when
   command: >
     influx setup
     --org "{{ influxdb_org }}"
@@ -17,21 +17,21 @@
     --username "{{ influxdb_user }}"
     --password "{{ influxdb_password }}"
     --host http://{{ influxdb_host }}:8086
-    --retention "{{ retention }}"
+    --retention "{{ influxdb_retention }}"
     --force
   when: result.rc != 0
 
-- name: Create authentication config
+- name: Create authentication config # noqa risky-shell-pipe
   command: >
     influx config create
-    --config-name "{{ authentication_config_name }}"
+    --config-name "{{ influxdb_authentication_config_name }}"
     --host-url http://{{ influxdb_host }}:8086
     --org "{{ influxdb_org }}"
     --active
   args:
     creates: /root/.influxdbv2/configs
 
-- name: Register bucket id
+- name: Register bucket id # noqa risky-shell-pipe
   shell: >
     influx bucket list
     | grep -P "\s{{ influxdb_bucket }}\s"
@@ -40,7 +40,7 @@
   register: bucket_id
   changed_when: false
 
-- name: list bucket id
+- name: List bucket id # noqa risky-shell-pipe
   shell: >
     influx auth list
     | grep "{{ bucket_id.stdout}}"
@@ -48,7 +48,7 @@
   register: token_list
   changed_when: false
 
-- name: Create token für bucket
+- name: Create token für bucket # noqa risky-shell-pipe no-changed-when
   shell: >
     influx auth create
     --write-bucket "{{ bucket_id.stdout }}"
@@ -57,7 +57,7 @@
   register: bucket_token
   when: token_list.rc != 0
 
-- name: Read tokens
+- name: Read tokens # noqa risky-shell-pipe
   shell: >
     influx auth list
     | grep "{{ bucket_id.stdout}}"
