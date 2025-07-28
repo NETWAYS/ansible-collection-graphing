@@ -1,7 +1,14 @@
 ---
+- name: Ensure gpg exists, for signing keys
+  ansible.builtin.apt:
+    name:
+      - gpg
+      - gpg-agent
+    state: present
+
 - name: Ensure InfluxDB key is available (Debian)
   apt_key:
-    url: https://repos.influxdata.com/influxdb.key
+    url: https://repos.influxdata.com/influxdata-archive.key
     state: present
 
 - name: Ensure InfluxDB apt repository is configured (Debian)

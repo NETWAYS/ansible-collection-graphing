@@ -3,7 +3,7 @@ name: Molecule Test
 on:
   push:
     tags:
-      - '*'
+      - "*"
     branches:
       - main
   pull_request:
@@ -18,9 +18,11 @@ jobs:
       COLLECTION_NAME: graphing
 
     strategy:
-      max-parallel: 4
       matrix:
-        distro: [centos7, rockylinux8, debian11, ubuntu2004]
+        distro:
+          - rockylinux9
+          - ubuntu2204
+          - debian12
         scenario: [default]
 
     steps:
@@ -30,7 +32,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: "3.x"
 
       - name: Install dependencies
         run: |
@@ -49,5 +51,5 @@ jobs:
           molecule --debug test -s ${{ matrix.scenario }}
         env:
           MOLECULE_DISTRO: ${{ matrix.distro }}
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"
