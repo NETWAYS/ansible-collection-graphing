@@ -16,4 +16,5 @@
     name: influxdb
     state: started
 
-- include_tasks: bucket.yml
+- name: Manage buckets
+  include_tasks: bucket.yml
